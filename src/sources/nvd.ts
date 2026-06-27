@@ -115,13 +115,55 @@ export async function fetchNvd(id: string): Promise<NvdData | null> {
   return cve ? parseCve(cve) : null
 }
 
-export async function searchNvd(keyword: string, limit = 40): Promise<SearchHit[]> {
-  await nvdLimiter.take()
-  const url = `${BASE}?keywordSearch=${encodeURIComponent(keyword)}&resultsPerPage=${limit}`
-  const json = await fetchJson<any>(url, { headers: headers() })
+// The search box is a single field, so we infer what the user meant from the
+// shape of the query and route it to the matching NVD parameter. Anything we
+// can't pin down — free text, or a bare number with no year — falls through to
+// keyword search, which scans the description text only.
+type QueryIntent =
+  | { kind: "cve"; id: string } // CVE-2025-55177 | 2025-55177 → cveIds
+  | { kind: "cwe"; id: string } // CWE-79                       → cweId
+  | { kind: "cpe"; name: string } // cpe:2.3:...                 → cpeName
+  | { kind: "keyword"; text: string } // everything else        → keywordSearch
+
+function classify(raw: string): QueryIntent {
+  const q = raw.trim()
+  const cve = q.match(/^(?:cve-)?((?:19|20)\d{2})-(\d{4,})$/i)
+  if (cve) return { kind: "cve", id: `CVE-${cve[1]}-${cve[2]}` }
+  const cwe = q.match(/^cwe-(\d+)$/i)
+  if (cwe) return { kind: "cwe", id: `CWE-${cwe[1]}` }
+  if (/^cpe:2\.3:/i.test(q)) return { kind: "cpe", name: q }
+  return { kind: "keyword", text: q }
+}
+
+function toHits(json: any): SearchHit[] {
   return (json.vulnerabilities || []).map((v: any) => {
     const cve = v.cve
     const d = parseCve(cve)
     return { id: cve.id, title: d.desc, sev: d.sev, score: d.score }
   })
+}
+
+export async function searchNvd(raw: string, limit = 40): Promise<SearchHit[]> {
+  const intent = classify(raw)
+  const p = new URLSearchParams()
+  switch (intent.kind) {
+    case "cve":
+      // An exact id lookup returns 0 or 1 result; no paging needed.
+      p.set("cveIds", intent.id)
+      break
+    case "cwe":
+      p.set("cweId", intent.id)
+      break
+    case "cpe":
+      p.set("cpeName", intent.name)
+      break
+    case "keyword":
+      p.set("keywordSearch", intent.text)
+      break
+  }
+  if (intent.kind !== "cve") p.set("resultsPerPage", String(limit))
+
+  await nvdLimiter.take()
+  const json = await fetchJson<any>(`${BASE}?${p}`, { headers: headers() })
+  return toHits(json)
 }
