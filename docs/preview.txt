@@ -1,0 +1,44 @@
+  ● ● ●                                           cvelens — ~/security — 140×44                                            ⠴ synced 2m ago
+  cvelens  v0.4.0                                                                     SOURCE   ● MERGED   ○ NVD   ○ MITRE   ○ OSV   ○ KEV
+ ┌─VULNERABILITIES────────────────────────────────────────────┐ ┌─CVE-2021-44228──────────────────────────────────────────────────────────┐
+ │ › fuzzy search id, product, CWE…                    8 hits │ │ CVE-2021-44228   CRITICAL   ⚠ KEV · EXPLOITED                          █│
+ │   CVE ID         CVSS  SUMMARY                      K EPSS │ │                                                                        █│
+ │ ▌ CVE-2021-44228 10.0  Apache Log4j2 JNDI lookup r… ●  94% │ │ Apache Log4j2 JNDI lookup remote code execution (Log4Shell).           █│
+ │ ▌ CVE-2024-3094  10.0  XZ Utils (liblzma) supply-c… ·  70% │ │                                                                        █│
+ │ ▌ CVE-2014-0160   7.5  OpenSSL TLS heartbeat out-o… ●  94% │ │ PUBLISHED   MODIFIED     ASSIGNER (CNA)             ORIGIN             █│
+ │ ▌ CVE-2017-5638  10.0  Apache Struts2 Jakarta Mult… ●  98% │ │ 2021-12-10  2024-04-03   Apache Software Foundation description · MITRE█│
+ │ ▌ CVE-2022-22965  9.8  Spring Framework data-bindi… ●  97% │ │                                                                        █│
+ │ ▌ CVE-2014-6271   9.8  GNU Bash environment variab… ●  98% │ │                                                                        █│
+ │ ▌ CVE-2023-44487  7.5  HTTP/2 rapid-reset stream c… ●  90% │ │                                                                        █│
+ │ ▌ CVE-2026-23048    —  Argo CD API improper author… ·    — │ │ ┌───────────────────────────────────────┐ ┌──────────────────────────┐ █│
+ │                                                            │ │ │ CVSS 3.1 BASE                    NVD  │ │ EPSS EXPLOIT PROB. FIRST │ █│
+ │                                                            │ │ │ 10.0  CRITICAL                        │ │ 94.4%  100 pctl          │ █│
+ │                                                            │ │ │ ████████████████████                  │ │ ████████████████████     │ █│
+ │                                                            │ │ │ AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H   │ │                          │ █│
+ │                                                            │ │ └───────────────────────────────────────┘ └──────────────────────────┘ █│
+ │                                                            │ │                                                                        █│
+ │                                                            │ │ ┌────────────────────────────────────────────────────────────────────┐ █│
+ │                                                            │ │ │ WEAKNESS (CWE)                                                 NVD │ █│
+ │                                                            │ │ │ CWE-502  Deserialization of Untrusted Data                         │ █│
+ │                                                            │ │ └────────────────────────────────────────────────────────────────────┘ █│
+ │                                                            │ │                                                                        ▀│
+ │                                                            │ │ ┌────────────────────────────────────────────────────────────────────┐  │
+ │                                                            │ │ │ AFFECTED                                                           │  │
+ │                                                            │ │ │ CPE PLATFORMS [NVD]                                                │  │
+ │                                                            │ │ │  apache:log4j 2.0 – 2.14.1                                         │  │
+ │                                                            │ │ │                                                                    │  │
+ │                                                            │ │ │ PACKAGE VERSIONS [OSV]                                             │  │
+ │                                                            │ │ │ org.apache.logging.log4j:log4j-co… ≥2.0-beta9 <2.15.0 → 2.17.1     │  │
+ │                                                            │ │ └────────────────────────────────────────────────────────────────────┘  │
+ │                                                            │ │                                                                         │
+ │                                                            │ │ ┌────────────────────────────────────────────────────────────────────┐  │
+ │                                                            │ │ │ EXPLOITATION — CISA KEV                                   CISA KEV │  │
+ │                                                            │ │ │ ⚠ Actively exploited in the wild — listed in the CISA Known        │  │
+ │                                                            │ │ │ Exploited Vulnerabilities catalog.                                 │  │
+ │                                                            │ │ │ Added 2021-12-10   Due 2021-12-24   Ransomware Known               │  │
+ │                                                            │ │ └────────────────────────────────────────────────────────────────────┘  │
+ │                                                            │ │                                                                         │
+ │                                                            │ │ ┌────────────────────────────────────────────────────────────────────┐  │
+ │ ● 8 indexed │ 6 exploited                   MERGED backend │ │ PROVENANC■ desc MITRE  ■ cvss NVD  ■ cwe NVD  ■ cpe NVD  ■ pkg OSV  ■   │
+ └────────────────────────────────────────────────────────────┘ └─────────────────────────────────────────────────────────────────────────┘
+   ↑↓  move    ⏎  open    /  search    s  cycle source    f  KEV only    y  yank id    ?  help    q  quit                 ★ star on github
